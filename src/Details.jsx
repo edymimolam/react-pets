@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import pet from "@frontendmasters/pet";
 import Carousel from "./Carousel.jsx";
+import ThemeContext from "./ThemeContext.jsx";
 
 class Details extends Component {
   state = { loading: true };
@@ -41,7 +42,11 @@ class Details extends Component {
             {animal} - {breed} - {location}
           </h2>
           <p>{description}</p>
-          <button>Adopt {name}</button>
+          <ThemeContext.Consumer>
+            {([value]) => (
+              <button style={{ backgroundColor: value }}>Adopt {name}</button>
+            )}
+          </ThemeContext.Consumer>
         </div>
         <Carousel media={media} />
       </div>
