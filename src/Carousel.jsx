@@ -9,6 +9,7 @@ const Carousel = ({ media }) => {
         large: "http://placecorgi.com/600/600"
       }
     ];
+  // throw new Error("fuck me");
   return (
     <div className="carousel">
       <img src={media[index].large} alt="animal" />

@@ -1,8 +1,8 @@
 import React from "react";
-import { render } from "react-dom";
 import { Router, Link } from "@reach/router";
 import SearchParams from "./SearchParams.jsx";
 import Details from "./Details.jsx";
+import ErrorBoundary from "./ErrorBoundary.jsx";
 
 const App = () => (
   <div>
@@ -16,4 +16,10 @@ const App = () => (
   </div>
 );
 
-render(<App />, document.getElementById("root"));
+export default function AppWithErrorBoundary(props) {
+  return (
+    <ErrorBoundary>
+      <App {...props} />
+    </ErrorBoundary>
+  );
+}
