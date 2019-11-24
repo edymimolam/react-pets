@@ -13,6 +13,7 @@
   "description": "Do you pet your pets",
   "devDependencies": {
     "@babel/core": "^7.7.2",
+    "@babel/plugin-proposal-class-properties": "^7.7.4",
     "@babel/plugin-transform-runtime": "^7.6.2",
     "babel-eslint": "^10.0.3",
     "cross-env": "^6.0.3",
@@ -31,15 +32,5 @@
     "@reach/router": "^1.2.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0"
-  },
-  "babel": {
-    "plugins": [
-      [
-        "@babel/plugin-transform-runtime",
-        {
-          "regenerator": true
-        }
-      ]
-    ]
   }
 }
