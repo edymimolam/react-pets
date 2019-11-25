@@ -1,10 +1,12 @@
 import React, { Component } from "react";
 import pet from "@frontendmasters/pet";
-import Carousel from "./Carousel.jsx";
+import { navigate } from "@reach/router";
 import ThemeContext from "./ThemeContext.jsx";
+import Carousel from "./Carousel.jsx";
+import Modal from "./Modal";
 
 class Details extends Component {
-  state = { loading: true };
+  state = { loading: true, isModalShow: false };
 
   componentDidMount() {
     const requestAnimal = async () => {
@@ -16,7 +18,8 @@ class Details extends Component {
         breed: animal.breeds.primary,
         location: `${animal.contact.address.city}, ${animal.contact.address.state}`,
         description: animal.description,
-        media: animal.photos
+        media: animal.photos,
+        url: animal.url
       });
     };
     requestAnimal();
@@ -30,8 +33,10 @@ class Details extends Component {
       breed,
       location,
       description,
-      media
+      media,
+      url
     } = this.state;
+
     if (loading) return <h1>Loading...</h1>;
 
     return (
@@ -44,11 +49,29 @@ class Details extends Component {
           <p>{description}</p>
           <ThemeContext.Consumer>
             {([value]) => (
-              <button style={{ backgroundColor: value }}>Adopt {name}</button>
+              <button
+                style={{ backgroundColor: value }}
+                onClick={() => this.setState({ isModalShow: true })}
+              >
+                Adopt {name}
+              </button>
             )}
           </ThemeContext.Consumer>
         </div>
         <Carousel media={media} />
+        {this.state.isModalShow && (
+          <Modal>
+            <div>
+              <h1>Would you like to adopt {name}</h1>
+              <div className="buttons">
+                <button onClick={() => navigate(url)}>yes</button>
+                <button onClick={() => this.setState({ isModalShow: false })}>
+                  no
+                </button>
+              </div>
+            </div>
+          </Modal>
+        )}
       </div>
     );
   }
