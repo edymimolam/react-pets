@@ -1,16 +1,18 @@
-import React, { useState, useEffect, useContext } from "react";
-import ThemeContext from "./ThemeContext.jsx";
+import React, { useState, useEffect } from "react";
 import useDropdown from "./useDropdown.jsx";
 import pet, { ANIMALS } from "@frontendmasters/pet";
 import SearchResults from "./SearchResults.jsx";
+import { connect } from "react-redux";
+import { setLocation } from "./reducers/location";
+import { setTheme } from "./reducers/theme";
 
-const SearchParams = () => {
-  const [location, setLocation] = useState("Seattle, WA");
+const SearchParams = props => {
   const [breeds, setBreeds] = useState([]);
   const [pets, setPets] = useState([]);
   const [animal, AnimalsDropdown] = useDropdown("Animals", "dog", ANIMALS);
   const [breed, BreedsDropdown, setBreed] = useDropdown("Breeds", "", breeds);
-  const [theme, setTheme] = useContext(ThemeContext);
+
+  const { location, setLocation, theme, setTheme } = props;
 
   useEffect(() => {
     setBreed("");
@@ -75,4 +77,10 @@ const SearchParams = () => {
   );
 };
 
-export default SearchParams;
+const mapStateToProps = ({ loc: location, theme }) => ({ location, theme });
+const mapDispatchToProps = dispatch => ({
+  setLocation: location => dispatch(setLocation(location)),
+  setTheme: theme => dispatch(setTheme(theme))
+});
+
+export default connect(mapStateToProps, mapDispatchToProps)(SearchParams);
